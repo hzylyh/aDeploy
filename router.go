@@ -1,7 +1,16 @@
+/*
+ * @Description: 路由文件
+ * @Author: John Holl
+ * @Github: https://github.com/hzylyh
+ * @Date: 2021-04-13 18:40:28
+ * @LastEditors: John Holl
+ * @LastEditTime: 2021-05-04 10:35:16
+ */
 package main
 
 import (
 	"aDeploy/controller"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -24,9 +33,20 @@ func MapRoutes() *gin.Engine {
 
 	// 创建根路由
 	apiRoot := router.Group("/aDeployApi")
-	apiRoot.Use()
 
-	authApi := apiRoot.Group("/image")
-	authApi.POST("/getList", controller.GetList)
+	// 跨域配置
+	apiRoot.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{"Origin", "Authorization", "Content-Type"},
+	}))
+
+	// deployment
+	deployApi := apiRoot.Group("/deployment")
+	deployApi.POST("/create", controller.CreateDeployment)
+
+	// service
+	serviceApi := apiRoot.Group("/service")
+	serviceApi.POST("/create", controller.CreateService)
+
 	return router
 }

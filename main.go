@@ -9,6 +9,7 @@ import (
 
 var DB *gorm.DB
 
+
 func main() {
 	generateTable()
 	router := MapRoutes()
