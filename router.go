@@ -4,7 +4,7 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-04-13 18:40:28
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-04 10:35:16
+ * @LastEditTime: 2021-05-10 17:06:50
  */
 package main
 
@@ -47,6 +47,10 @@ func MapRoutes() *gin.Engine {
 	// service
 	serviceApi := apiRoot.Group("/service")
 	serviceApi.POST("/create", controller.CreateService)
+
+	// image
+	imageApi := apiRoot.Group("/image")
+	imageApi.POST("/getList", controller.GetImageList)
 
 	return router
 }
