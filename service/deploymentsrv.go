@@ -4,7 +4,7 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-05-04 09:41:14
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-04 10:33:15
+ * @LastEditTime: 2021-05-13 13:11:16
  */
 package service
 
@@ -37,3 +37,8 @@ func (srv *deploymentService) CreateDeployment(c *gin.Context) (deployment *apps
 
 //func (srv *demoService) DeleteDeployment(c *gin.Context) (deployment *v1.Deployment, err error) {
 //}
+
+func (srv *deploymentService) GetDeploymentStatus(c *gin.Context) (depStatus *appsV1.Deployment, err error) {
+	// conf.Clientset.AppsV1().Deployments("default").Get()
+	return
+}

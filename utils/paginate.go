@@ -1,10 +1,10 @@
 /*
- * @Description:
+ * @Description: gorm分页方法
  * @Author: John Holl
  * @Github: https://github.com/hzylyh
  * @Date: 2021-05-10 17:17:30
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-10 18:19:14
+ * @LastEditTime: 2021-05-10 18:20:02
  */
 package utils
 

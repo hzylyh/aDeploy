@@ -4,7 +4,7 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-04-13 18:40:28
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-10 17:06:50
+ * @LastEditTime: 2021-05-12 21:10:16
  */
 package main
 
@@ -26,10 +26,10 @@ func MapRoutes() *gin.Engine {
 		AllowHeaders: []string{"Origin", "Authorization", "Content-Type"},
 	}))
 
-	router.LoadHTMLGlob("web/dist/*.html")          // 添加入口index.html
-	router.LoadHTMLFiles("web/static/*/*")          // 添加资源路径
-	router.Static("/static", "./web/dist/static")   // 添加资源路径
-	router.StaticFile("/", "./web/dist/index.html") //前端接口
+	// router.LoadHTMLGlob("web/dist/*.html")          // 添加入口index.html
+	// router.LoadHTMLFiles("web/static/*/*")          // 添加资源路径
+	// router.Static("/static", "./web/dist/static")   // 添加资源路径
+	// router.StaticFile("/", "./web/dist/index.html") //前端接口
 
 	// 创建根路由
 	apiRoot := router.Group("/aDeployApi")
@@ -43,6 +43,7 @@ func MapRoutes() *gin.Engine {
 	// deployment
 	deployApi := apiRoot.Group("/deployment")
 	deployApi.POST("/create", controller.CreateDeployment)
+	deployApi.POST("/getStatus", controller.GetDeploymentStatus)
 
 	// service
 	serviceApi := apiRoot.Group("/service")
@@ -51,6 +52,10 @@ func MapRoutes() *gin.Engine {
 	// image
 	imageApi := apiRoot.Group("/image")
 	imageApi.POST("/getList", controller.GetImageList)
+
+	// container
+	containerApi := apiRoot.Group("/container")
+	containerApi.POST("/getList", controller.GetContainerList)
 
 	return router
 }
