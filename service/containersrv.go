@@ -4,7 +4,7 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-05-10 19:43:51
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-14 10:49:15
+ * @LastEditTime: 2021-05-14 11:04:00
  */
 package service
 
@@ -43,7 +43,7 @@ func (cs *containerService) GetContainerList(qj *qjson.QJson) (containerInfo []*
 
 	imageList := qj.GetArray("imageList")
 	fmt.Println(imageList)
-	if err := conf.DB.Table("t_container_infos").Where("container_id in ?", imageList).Find(&containerInfo).Error; err != nil {
+	if err := conf.DB.Table("t_container_infos").Where("image_id in ?", imageList).Find(&containerInfo).Error; err != nil {
 		return nil, err
 	}
 
