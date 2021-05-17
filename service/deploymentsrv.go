@@ -4,12 +4,13 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-05-04 09:41:14
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-13 13:11:16
+ * @LastEditTime: 2021-05-17 20:08:55
  */
 package service
 
 import (
 	"aDeploy/conf"
+	"aDeploy/utils/qjson"
 	"context"
 	"fmt"
 
@@ -35,10 +36,20 @@ func (srv *deploymentService) CreateDeployment(c *gin.Context) (deployment *apps
 	return
 }
 
+func (srv *deploymentService) DeleteDeployment(qj *qjson.QJson) (err error) {
+	name := qj.GetString("name")
+	if err = conf.Clientset.AppsV1().Deployments("default").Delete(context.TODO(), name, metav1.DeleteOptions{}); err != nil {
+		return err
+	}
+	return nil
+}
+
 //func (srv *demoService) DeleteDeployment(c *gin.Context) (deployment *v1.Deployment, err error) {
 //}
 
-func (srv *deploymentService) GetDeploymentStatus(c *gin.Context) (depStatus *appsV1.Deployment, err error) {
-	// conf.Clientset.AppsV1().Deployments("default").Get()
-	return
+func (srv *deploymentService) GetDeployment(c *gin.Context) (deployments *appsV1.DeploymentList, err error) {
+	if deployments, err = conf.Clientset.AppsV1().Deployments("default").List(context.TODO(), metav1.ListOptions{}); err != nil {
+		return nil, err
+	}
+	return deployments, nil
 }

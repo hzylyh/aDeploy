@@ -4,7 +4,7 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-04-13 18:40:28
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-12 21:10:16
+ * @LastEditTime: 2021-05-17 20:55:32
  */
 package main
 
@@ -43,11 +43,14 @@ func MapRoutes() *gin.Engine {
 	// deployment
 	deployApi := apiRoot.Group("/deployment")
 	deployApi.POST("/create", controller.CreateDeployment)
-	deployApi.POST("/getStatus", controller.GetDeploymentStatus)
+	deployApi.POST("/delete", controller.DeleteDeployment)
+	deployApi.POST("/getInfos", controller.GetDeploymentInfo)
 
 	// service
 	serviceApi := apiRoot.Group("/service")
 	serviceApi.POST("/create", controller.CreateService)
+	serviceApi.POST("/delete", controller.DeleteService)
+	serviceApi.POST("/getInfos", controller.GetServiceInfo)
 
 	// image
 	imageApi := apiRoot.Group("/image")
