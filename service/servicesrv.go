@@ -4,7 +4,7 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-05-04 09:46:17
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-17 20:51:46
+ * @LastEditTime: 2021-05-18 16:01:15
  */
 package service
 
@@ -28,7 +28,7 @@ func (srv *k8sService) CreateService(c *gin.Context) (service *v1.Service, err e
 
 	err = c.ShouldBind(&service)
 	// conf.Clientset.CoreV1().Services("default").Create(context.TODO(), &v1.Service{})
-	service, err = conf.Clientset.CoreV1().Services("default").Create(context.TODO(), service, metav1.CreateOptions{
+	service, err = conf.Clientset.CoreV1().Services("nari").Create(context.TODO(), service, metav1.CreateOptions{
 		TypeMeta:     metav1.TypeMeta{},
 		DryRun:       nil,
 		FieldManager: "",
@@ -39,7 +39,7 @@ func (srv *k8sService) CreateService(c *gin.Context) (service *v1.Service, err e
 func (srv *k8sService) DeleteService(qj *qjson.QJson) (err error) {
 	name := qj.GetString("name")
 	// conf.Clientset.CoreV1().Services("default").Create(context.TODO(), &v1.Service{})
-	if err = conf.Clientset.CoreV1().Services("default").Delete(context.TODO(), name, metav1.DeleteOptions{}); err != nil {
+	if err = conf.Clientset.CoreV1().Services("nari").Delete(context.TODO(), name, metav1.DeleteOptions{}); err != nil {
 		return
 	}
 	return
@@ -49,7 +49,7 @@ func (srv *k8sService) DeleteService(qj *qjson.QJson) (err error) {
 //}
 
 func (srv *k8sService) GetServiceInfo(c *gin.Context) (services *v1.ServiceList, err error) {
-	if services, err = conf.Clientset.CoreV1().Services("default").List(context.TODO(), metav1.ListOptions{}); err != nil {
+	if services, err = conf.Clientset.CoreV1().Services("nari").List(context.TODO(), metav1.ListOptions{}); err != nil {
 		return
 	}
 	return

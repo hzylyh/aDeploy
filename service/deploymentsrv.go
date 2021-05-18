@@ -4,7 +4,7 @@
  * @Github: https://github.com/hzylyh
  * @Date: 2021-05-04 09:41:14
  * @LastEditors: John Holl
- * @LastEditTime: 2021-05-17 20:08:55
+ * @LastEditTime: 2021-05-18 16:11:52
  */
 package service
 
@@ -28,7 +28,7 @@ func (srv *deploymentService) CreateDeployment(c *gin.Context) (deployment *apps
 	err = c.ShouldBind(&deployment)
 	fmt.Println(deployment.ObjectMeta)
 	fmt.Println(deployment.Status)
-	deployment, err = conf.Clientset.AppsV1().Deployments("default").Create(context.TODO(), deployment, metav1.CreateOptions{
+	deployment, err = conf.Clientset.AppsV1().Deployments("nari").Create(context.TODO(), deployment, metav1.CreateOptions{
 		TypeMeta:     metav1.TypeMeta{},
 		DryRun:       nil,
 		FieldManager: "",
@@ -38,7 +38,7 @@ func (srv *deploymentService) CreateDeployment(c *gin.Context) (deployment *apps
 
 func (srv *deploymentService) DeleteDeployment(qj *qjson.QJson) (err error) {
 	name := qj.GetString("name")
-	if err = conf.Clientset.AppsV1().Deployments("default").Delete(context.TODO(), name, metav1.DeleteOptions{}); err != nil {
+	if err = conf.Clientset.AppsV1().Deployments("nari").Delete(context.TODO(), name, metav1.DeleteOptions{}); err != nil {
 		return err
 	}
 	return nil
@@ -48,7 +48,7 @@ func (srv *deploymentService) DeleteDeployment(qj *qjson.QJson) (err error) {
 //}
 
 func (srv *deploymentService) GetDeployment(c *gin.Context) (deployments *appsV1.DeploymentList, err error) {
-	if deployments, err = conf.Clientset.AppsV1().Deployments("default").List(context.TODO(), metav1.ListOptions{}); err != nil {
+	if deployments, err = conf.Clientset.AppsV1().Deployments("nari").List(context.TODO(), metav1.ListOptions{}); err != nil {
 		return nil, err
 	}
 	return deployments, nil
